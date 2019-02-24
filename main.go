@@ -58,8 +58,23 @@ func (m *Bnumamap) set(k string, v interface{}){
 		}
 		
 		e.scattercount += 1
+	}
+
 }
 
+
+func (m Bnumamap) Get(k string) interface{} {
+	i := XxHash(k) % m.Size()
+	e := m.buckets[i]
+	for e.key != k {
+		i = (i + 1) % m.Size()
+		e = m.buckets[i]
+		if i == XxHash(k)%m.Size() {
+			// Not Found
+			return nil
+		}
+	}
+	return e.value
 }
 
 func FnvHash(s string) uint32 {

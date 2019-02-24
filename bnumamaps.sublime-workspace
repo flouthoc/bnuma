@@ -4,6 +4,10 @@
 		"selected_items":
 		[
 			[
+				"s",
+				"scattercount"
+			],
+			[
 				"smaple",
 				"sampletype"
 			],
@@ -339,7 +343,7 @@
 			"file": "main.go",
 			"settings":
 			{
-				"buffer_size": 126,
+				"buffer_size": 1231,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
@@ -381,6 +385,7 @@
 	},
 	"file_history":
 	[
+		"/home/ar/work/bnumamaps/bench_test.go",
 		"/home/ar/work/murmur3-map/README.md",
 		"/home/ar/work/murmur3-map/pkg/cityhash/city64.go",
 		"/home/ar/work/murmur3-map/pkg/cityhash/cityhash.go",
@@ -507,8 +512,7 @@
 		"/home/ar/work/test/getTag.js",
 		"/home/ar/work/test/bytag.js",
 		"/home/ar/work/test/final3.js",
-		"/home/ar/work/test/final2.js",
-		"/home/ar/work/test/final.js"
+		"/home/ar/work/test/final2.js"
 	],
 	"find":
 	{
@@ -615,15 +619,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 126,
+						"buffer_size": 1231,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								126,
-								126
+								713,
+								713
 							]
 						],
 						"settings":
@@ -631,12 +635,17 @@
 							"syntax": "Packages/Go/Go.sublime-syntax"
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 175.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
 					"type": "text"
 				}
+			]
+		},
+		{
+			"sheets":
+			[
 			]
 		}
 	],
@@ -657,11 +666,18 @@
 				0,
 				1,
 				1
+			],
+			[
+				1,
+				0,
+				2,
+				1
 			]
 		],
 		"cols":
 		[
 			0.0,
+			0.5,
 			1.0
 		],
 		"rows":
