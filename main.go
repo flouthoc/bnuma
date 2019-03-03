@@ -77,6 +77,18 @@ func (m Bnumamap) Get(k string) interface{} {
 	return e.value
 }
 
+func (m *Bnumamap) LoadFactor() float32 {
+	return float32(m.count) / float32(m.Size())
+}
+
+func (m *Bnumamap) DibAverage() float32 {
+	sum := uint32(0)
+	for _, v := range m.values {
+		sum += v.scattercount
+	}
+	return float32(sum) / float32(m.count)
+}
+
 func FnvHash(s string) uint32 {
 	h := fnv.New32a()
 	h.Write([]byte(s))

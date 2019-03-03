@@ -4,6 +4,10 @@
 		"selected_items":
 		[
 			[
+				"X",
+				"XxHash"
+			],
+			[
 				"s",
 				"scattercount"
 			],
@@ -343,7 +347,7 @@
 			"file": "main.go",
 			"settings":
 			{
-				"buffer_size": 1231,
+				"buffer_size": 1474,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
@@ -619,23 +623,24 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1231,
+						"buffer_size": 1474,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								713,
-								713
+								1230,
+								1230
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/Go/Go.sublime-syntax"
+							"syntax": "Packages/Go/Go.sublime-syntax",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 175.0,
+						"translation.y": 674.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
@@ -677,7 +682,7 @@
 		"cols":
 		[
 			0.0,
-			0.5,
+			0.784375,
 			1.0
 		],
 		"rows":
