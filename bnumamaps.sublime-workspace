@@ -347,9 +347,18 @@
 			"file": "main.go",
 			"settings":
 			{
-				"buffer_size": 1474,
+				"buffer_size": 1724,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "package robinhood\n\nimport (\n\t\"fmt\"\n)\n\ntype RobinHood struct {\n\tvalues []Entry\n\tcount  uint32\n}\n\nfunc NewRobinHood(size int) *RobinHood {\n\treturn &RobinHood{\n\t\tvalues: make([]Entry, size, size),\n\t}\n}\n\nfunc (m RobinHood) Size() uint32 {\n\treturn uint32(len(m.values))\n}\n\nfunc (m *RobinHood) Put(k string, v interface{}) {\n\ti := FnvHash(k) % m.Size()\n\t// DIB (distance to initial bucket) is zero initially\n\te := Entry{key: k, value: v, dib: 0}\n\tfor c := i; ; c = (c + 1) % m.Size() {\n\t\tif m.values[c].value == nil {\n\t\t\t// Able to insert here\n\t\t\tm.values[c] = e\n\t\t\tm.count += 1\n\t\t\treturn\n\t\t} else {\n\t\t\tif m.values[c].dib < e.dib {\n\t\t\t\t// To be swapped because it is rich.\n\t\t\t\ttmp := e\n\t\t\t\te = Entry{\n\t\t\t\t\tkey:   m.values[c].key,\n\t\t\t\t\tvalue: m.values[c].value,\n\t\t\t\t\tdib:   m.values[c].dib,\n\t\t\t\t}\n\t\t\t\t// Current target is inserted here instead\n\t\t\t\tm.values[c] = Entry{\n\t\t\t\t\tkey:   tmp.key,\n\t\t\t\t\tvalue: tmp.value,\n\t\t\t\t\tdib:   tmp.dib,\n\t\t\t\t}\n\n\t\t\t}\n\t\t}\n\t\t// The entry to be inserted goes away from ideal position gradually.\n\t\te.dib += 1\n\t}\n}\n\nfunc (m *RobinHood) Get(k string) interface{} {\n\ti := FnvHash(k) % m.Size()\n\te := m.values[i]\n\tfor e.key != k {\n\t\ti = (i + 1) % m.Size()\n\t\te = m.values[i]\n\t\tif i == FnvHash(k)%m.Size() {\n\t\t\t// Not Found\n\t\t\treturn nil\n\t\t}\n\t}\n\treturn e.value\n}\n\nfunc (m *RobinHood) Erase(k string) {\n\ti := FnvHash(k) % m.Size()\n\te := m.values[i]\n\tfor e.key != k {\n\t\ti = (i + 1) % m.Size()\n\t\te = m.values[i]\n\t\tif i == FnvHash(k)%m.Size() {\n\t\t\treturn\n\t\t}\n\t}\n\tm.values[i] = Entry{key: \"\", value: nil}\n\tm.count -= 1\n}\n\nfunc (m *RobinHood) LoadFactor() float32 {\n\treturn float32(m.count) / float32(m.Size())\n}\n\nfunc (m *RobinHood) DibAverage() float32 {\n\tsum := uint32(0)\n\tfor _, v := range m.values {\n\t\tsum += v.dib\n\t}\n\treturn float32(sum) / float32(m.count)\n}\n\nfunc (m *RobinHood) String() string {\n\tret := \"\"\n\tfor _, v := range m.values {\n\t\tret = ret + fmt.Sprintf(\"[%s,%v,%d] \", v.key, v.value, v.dib)\n\t}\n\treturn ret\n}\n",
+			"settings":
+			{
+				"buffer_size": 1932,
+				"line_ending": "Unix",
+				"name": "package robinhood"
 			}
 		}
 	],
@@ -623,15 +632,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1474,
+						"buffer_size": 1724,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1230,
-								1230
+								1471,
+								1471
 							]
 						],
 						"settings":
@@ -640,7 +649,7 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 674.0,
+						"translation.y": 1284.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
@@ -649,8 +658,38 @@
 			]
 		},
 		{
+			"selected": 0,
 			"sheets":
 			[
+				{
+					"buffer": 1,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1932,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1725,
+								1725
+							]
+						],
+						"settings":
+						{
+							"auto_name": "package robinhood",
+							"syntax": "Packages/Text/Plain text.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1278.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				}
 			]
 		}
 	],
@@ -682,7 +721,7 @@
 		"cols":
 		[
 			0.0,
-			0.784375,
+			0.540060468632,
 			1.0
 		],
 		"rows":

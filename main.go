@@ -19,8 +19,8 @@ type Bnumamap struct{
 }
 
 
-func (m *Bnumamap) Size() int {
-	return len(m.buckets)
+func (m *Bnumamap) Size() uint64 {
+	return uint64(len(m.buckets))
 }
 
 func NewBnumamap(size int) *Bnumamap {
@@ -30,16 +30,17 @@ func NewBnumamap(size int) *Bnumamap {
 
 func (m *Bnumamap) set(k string, v interface{}){
 
-	idx := XxHash(key) % len(m.buckets)
+	idx := XxHash(k) % m.Size()
 	e := Node{key: k, value: v, scattercount: 0}
-	for c := i; ; c = (c + 1) % m.Size() {
+	for c := idx; ; c = (c + 1) % m.Size() {
 		if m.buckets[c].value == nil {
 
 			m.buckets[c] = e
 			m.count += 1
 			return
 		} else {
-			if m.values[c].scattercount < e.scattercount {
+
+			if m.buckets[c].scattercount < e.scattercount {
 				
 				tmp := e
 				e = Node{
@@ -64,12 +65,12 @@ func (m *Bnumamap) set(k string, v interface{}){
 
 
 func (m Bnumamap) Get(k string) interface{} {
-	i := XxHash(k) % m.Size()
-	e := m.buckets[i]
+	idx := XxHash(k) % m.Size()
+	e := m.buckets[idx]
 	for e.key != k {
-		i = (i + 1) % m.Size()
-		e = m.buckets[i]
-		if i == XxHash(k)%m.Size() {
+		idx = (idx + 1) % m.Size()
+		e = m.buckets[idx]
+		if idx == XxHash(k)%m.Size() {
 			// Not Found
 			return nil
 		}
@@ -83,7 +84,7 @@ func (m *Bnumamap) LoadFactor() float32 {
 
 func (m *Bnumamap) DibAverage() float32 {
 	sum := uint32(0)
-	for _, v := range m.values {
+	for _, v := range m.buckets {
 		sum += v.scattercount
 	}
 	return float32(sum) / float32(m.count)
